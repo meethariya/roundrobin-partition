@@ -1,0 +1,46 @@
+{% extends "rrpartition/base.html" %} {% block content %} {% load static %}
+{% if alert %}
+<div class="alert alert-{{result}} alert-dismissible fade show" role="alert">
+  <strong>{{outcome}}!</strong> {{outcome_message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+<div class="row">
+    {% for att in info %}
+        <div class="col-sm-{{size}}">
+            <h6 class="alert alert-success fs-6">Partition:- {{att.partition}}
+                <span class="float-end fs-6">Table:- {{att.table}}</span>
+            </h6>
+            <table class="table table-hover table-sm">
+                <thead>
+                <tr>
+                    {% for i in att.cols %}
+                        <th scope="col">{{i}}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in att.rows %}
+                    <tr>
+                    {% for i in row %}
+                        <td scope="row">{{i}}</th>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>        
+        </div>
+    {% endfor %}
+    <div class="col-sm-4">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="Select1">Number of Partitions</label>
+                <input type="number" class="form-control my-2" id="input1" name = "partitions" min="2" value = "3">
+            </div>
+            <input type="submit" value="Partition" name="action" class="btn btn-outline-primary my-2">
+            <input type="submit" value="Reset" name="action" class="btn btn-outline-danger my-2">
+        </form>
+    </div>
+</div>
+{% endblock content %}
